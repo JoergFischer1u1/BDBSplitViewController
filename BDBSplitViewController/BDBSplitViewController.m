@@ -617,11 +617,6 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 #pragma mark -
 @implementation UIViewController (BDBSplitViewController)
 
-- (BDBSplitViewController *)splitViewController
-{
-    return [self bdb_splitViewController];
-}
-
 - (BDBSplitViewController *)bdb_splitViewController
 {
     UIViewController *parentViewController = self;

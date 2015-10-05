@@ -1,4 +1,4 @@
-# BDBSplitViewController 
+# BDBSplitViewController
 
 BDBSplitViewController is a nice drop-in replacement for UISplitViewController with a few fancy features.
 
