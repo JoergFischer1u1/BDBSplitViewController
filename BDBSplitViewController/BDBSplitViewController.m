@@ -164,6 +164,11 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
     [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0.f];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return self.statusBarHidden;
+}
+
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
