@@ -281,7 +281,7 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
                                               @"Show/Hide button title when master view is visible.");
 
         _showHideMasterViewButtonItem = [[UIBarButtonItem alloc] initWithTitle:buttonTitle
-                                                                         style:UIBarButtonItemStyleBordered
+                                                                         style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(toggleMasterView:)];
     }
@@ -298,7 +298,7 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
                                                                                      [NSBundle mainBundle],
                                                                                      @"Close",
                                                                                      @"Close button title.")
-                                             style:UIBarButtonItemStyleBordered
+                                             style:UIBarButtonItemStylePlain
                                             target:self
                                             action:@selector(closeMasterView:)];
     }
