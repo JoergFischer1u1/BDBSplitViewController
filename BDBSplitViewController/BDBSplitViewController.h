@@ -143,6 +143,12 @@ typedef NS_ENUM(NSInteger, BDBSplitViewControllerMasterDisplayStyle) {
 
 @property (nonatomic) UIStatusBarStyle preferredStatusBarStyle;
 
+/**
+ * Set this flag to hide or show the status bar.
+ * Don't forget to call setNeedsStatusBarAppearanceUpdate after changing this flag.
+ **/
+@property (nonatomic) BOOL statusBarHidden;
+
 #pragma mark Initialization
 /**
  *  Create and initialize a split view with the given master and detail view controllers.
