@@ -57,6 +57,8 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 - (CGRect)masterViewFrameForState:(BDBMasterViewState)state;
 - (CGRect)detailViewFrameForState:(BDBMasterViewState)state;
 
+@property UIViewController *observedViewController;
+
 @end
 
 
@@ -138,9 +140,9 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 #pragma mark View Lifecycle
 - (void)dealloc
 {
-    [self.detailViewController removeObserver:self
-                                   forKeyPath:kBDBSplitViewControllerKVOKeyPath
-                                      context:kBDBSplitViewControllerKVOContext];
+    [_observedViewController removeObserver:self
+                                 forKeyPath:kBDBSplitViewControllerKVOKeyPath
+                                    context:kBDBSplitViewControllerKVOContext];
 }
 
 - (void)awakeFromNib
@@ -264,6 +266,25 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
     }
 }
 
+- (void)observeViewController:(UIViewController *)viewController
+{
+    if ([viewController isEqual:self.observedViewController]) {
+        return;
+    }
+
+    [self.observedViewController removeObserver:self
+                                     forKeyPath:kBDBSplitViewControllerKVOKeyPath
+                                        context:kBDBSplitViewControllerKVOContext];
+
+    self.observedViewController = viewController;
+
+    [self.observedViewController addObserver:self
+                                  forKeyPath:kBDBSplitViewControllerKVOKeyPath
+                                     options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
+                                     context:kBDBSplitViewControllerKVOContext];
+}
+
+
 #pragma mark UIBarButtonItems
 - (UIBarButtonItem *)showHideMasterViewButtonItem
 {
@@ -327,22 +348,8 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 {
     NSParameterAssert(viewControllers);
     NSAssert(viewControllers.count == 2, @"viewControllers array must conatin both a master view controller and a detail view controller.");
-
-    UIViewController *newDetailVC = viewControllers[1];
-
-    if (self.detailViewController && ![self.detailViewController isEqual:newDetailVC]) {
-        [self.detailViewController removeObserver:self
-                                       forKeyPath:kBDBSplitViewControllerKVOKeyPath
-                                          context:kBDBSplitViewControllerKVOContext];
-    }
-
+    [self observeViewController:viewControllers[1]];
     [super setViewControllers:viewControllers];
-
-    [newDetailVC addObserver:self
-                  forKeyPath:kBDBSplitViewControllerKVOKeyPath
-                     options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
-                     context:kBDBSplitViewControllerKVOContext];
-
     [self configureMasterView];
 }
 
