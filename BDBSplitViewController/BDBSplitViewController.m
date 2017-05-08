@@ -445,7 +445,7 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 #pragma mark Detail View
 - (CGFloat)detailDimmingOpacity
 {
-    if (!_detailViewDimmingOpacity) {
+    if (_detailViewDimmingOpacity == 0) {
         _detailViewDimmingOpacity = 0.4f;
     }
 

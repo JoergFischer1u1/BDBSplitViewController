@@ -141,8 +141,6 @@ typedef NS_ENUM(NSInteger, BDBSplitViewControllerMasterDisplayStyle) {
  */
 @property (nonatomic) CGFloat detailViewDimmingOpacity;
 
-@property (nonatomic) UIStatusBarStyle preferredStatusBarStyle;
-
 /**
  * Set this flag to hide or show the status bar.
  * Don't forget to call setNeedsStatusBarAppearanceUpdate after changing this flag.
