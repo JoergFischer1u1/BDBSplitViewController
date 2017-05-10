@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name      = 'BDBSplitViewController'
-  s.version   = '1.3.1'
+  s.version   = '1.3.2'
   s.license   = 'MIT'
   s.summary   = 'A nice drop-in replacement for UISplitViewController with a few fancy features.'
   s.homepage  = 'https://github.com/bdbergeron/BDBSplitViewController'
@@ -9,9 +9,8 @@ Pod::Spec.new do |s|
   s.source    = { :git => 'https://github.com/bdbergeron/BDBSplitViewController.git', :tag => s.version.to_s }
   s.requires_arc = true
 
-  s.platform = :ios, '6.0'
+  s.platform = :ios, '8.0'
   
   s.source_files        = 'BDBSplitViewController/*.{h,m}'  
   s.public_header_files = 'BDBSplitViewController/*.h'
-  s.resources = 'BDBSplitViewController/Resources/*'
 end
