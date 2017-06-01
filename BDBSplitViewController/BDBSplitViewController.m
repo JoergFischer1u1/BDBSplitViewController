@@ -339,6 +339,17 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
     [self configureMasterView];
 }
 
+- (UIViewController *)childViewControllerForStatusBarStyle
+{
+    return self.viewControllers.firstObject;
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden
+{
+    return self.viewControllers.firstObject;
+}
+
+
 #pragma mark Master / Detail Accessors
 - (UIViewController *)masterViewController
 {
