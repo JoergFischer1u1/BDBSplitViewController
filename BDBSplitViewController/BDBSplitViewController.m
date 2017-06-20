@@ -46,7 +46,7 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 
 @property (nonatomic, readwrite) BDBMasterViewState masterViewState;
 
-- (void)setupWithViewControllers:(NSArray *)viewControllers;
+- (void)setupWithViewControllers:(NSArray *)viewControllers isMasterHidden:(BOOL)isMasterHidden;
 
 - (void)initialize;
 - (void)configureMasterView;
@@ -68,22 +68,15 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 #pragma mark Initialization
 + (instancetype)splitViewWithMasterViewController:(UIViewController *)mvc
                              detailViewController:(UIViewController *)dvc
+                                   isMasterHidden:(BOOL)isMasterHidden
 {
     return [[[self class] alloc] initWithMasterViewController:mvc
-                                         detailViewController:dvc];
-}
-
-+ (instancetype)splitViewWithMasterViewController:(UIViewController *)mvc
-                             detailViewController:(UIViewController *)dvc
-                                            style:(BDBSplitViewControllerMasterDisplayStyle)style
-{
-    return [[[self class] alloc] initWithMasterViewController:mvc
-                                         detailViewController:dvc
-                                                        style:style];
+                                         detailViewController:dvc isMasterHidden:isMasterHidden];
 }
 
 - (instancetype)initWithMasterViewController:(UIViewController *)mvc
                         detailViewController:(UIViewController *)dvc
+                              isMasterHidden:(BOOL)isMasterHidden
 {
     NSParameterAssert(mvc);
     NSParameterAssert(dvc);
@@ -91,37 +84,14 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
     self = [super init];
 
     if (self) {
-        [self setupWithViewControllers:@[mvc, dvc]];
+        [self setupWithViewControllers:@[mvc, dvc] isMasterHidden:isMasterHidden];
     }
 
     return self;
 }
 
-- (instancetype)initWithMasterViewController:(UIViewController *)mvc
-                        detailViewController:(UIViewController *)dvc
-                                       style:(BDBSplitViewControllerMasterDisplayStyle)style
-{
-    self = [self initWithMasterViewController:mvc detailViewController:dvc];
 
-    if (self) {
-        _masterViewDisplayStyle = style;
-    }
-
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-
-    if (self) {
-        [self setupWithViewControllers:self.viewControllers];
-    }
-
-    return self;
-}
-
-- (void)setupWithViewControllers:(NSArray *)viewControllers
+- (void)setupWithViewControllers:(NSArray *)viewControllers isMasterHidden:(BOOL)isMasterHidden
 {
     NSParameterAssert(viewControllers);
     NSAssert(viewControllers.count == 2, @"viewControllers array must conatin both a master view controller and a detail view controller.");
@@ -129,12 +99,7 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
     self.viewControllers = viewControllers;
 
     _masterViewDisplayStyle = BDBSplitViewControllerMasterDisplayStyleNormal;
-
-    if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
-        _masterViewState = BDBMasterViewStateHidden;
-    } else {
-        _masterViewState = BDBMasterViewStateVisible;
-    }
+    _masterViewState = isMasterHidden ? BDBMasterViewStateHidden : BDBMasterViewStateVisible;
 }
 
 #pragma mark View Lifecycle

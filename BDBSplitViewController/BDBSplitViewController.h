@@ -59,6 +59,8 @@ typedef NS_ENUM(NSInteger, BDBSplitViewControllerMasterDisplayStyle) {
 #pragma mark -
 @interface BDBSplitViewController : UISplitViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+
 /**
  *  BDBSplitViewController delegate.
  *
@@ -159,23 +161,8 @@ typedef NS_ENUM(NSInteger, BDBSplitViewControllerMasterDisplayStyle) {
  *  @since 1.2.0
  */
 + (instancetype)splitViewWithMasterViewController:(UIViewController *)mvc
-                             detailViewController:(UIViewController *)dvc;
-
-/**
- *  Create and initialize a split view with the given master and detail view controllers using the 
- *  specified style.
- *
- *  @param mvc   Master view controller.
- *  @param dvc   Detail view controller.
- *  @param style Master view display style.
- *
- *  @return New BDBSplitViewController instance.
- *
- *  @since 1.4
- */
-+ (instancetype)splitViewWithMasterViewController:(UIViewController *)mvc
                              detailViewController:(UIViewController *)dvc
-                                            style:(BDBSplitViewControllerMasterDisplayStyle)style;
+                                         isMasterHidden:(BOOL)isMasterHidden;
 
 /**
  *  Initialize a new split view controller instance with the given master and detail view 
@@ -189,23 +176,8 @@ typedef NS_ENUM(NSInteger, BDBSplitViewControllerMasterDisplayStyle) {
  *  @since 1.0.0
  */
 - (instancetype)initWithMasterViewController:(UIViewController *)mvc
-                        detailViewController:(UIViewController *)dvc;
-
-/**
- *  Initialize a new split view controller instance with the given master and detail view 
- *  controllers using the spcified style.
- *
- *  @param mvc   Master view controller.
- *  @param dvc   Detail view controller.
- *  @param style Master view display style.
- *
- *  @return Initialized BDBSplitViewController instance.
- *
- *  @since 1.4
- */
-- (instancetype)initWithMasterViewController:(UIViewController *)mvc
                         detailViewController:(UIViewController *)dvc
-                                       style:(BDBSplitViewControllerMasterDisplayStyle)style;
+                              isMasterHidden:(BOOL)isMasterHidden;
 
 
 #pragma mark Show / Hide Master View
