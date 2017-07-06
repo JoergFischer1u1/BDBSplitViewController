@@ -38,6 +38,8 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 #pragma mark -
 @interface BDBSplitViewController ()
 
+@property (nonatomic,weak) UIApplication *application;
+
 @property (nonatomic) UIView *detailDimmingView;
 @property (nonatomic) UITapGestureRecognizer *detailTapGesture;
 
@@ -68,15 +70,15 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 #pragma mark Initialization
 + (instancetype)splitViewWithMasterViewController:(UIViewController *)mvc
                              detailViewController:(UIViewController *)dvc
-                                   isMasterHidden:(BOOL)isMasterHidden
+                                   application:(UIApplication *)application
 {
     return [[[self class] alloc] initWithMasterViewController:mvc
-                                         detailViewController:dvc isMasterHidden:isMasterHidden];
+                                         detailViewController:dvc application:application];
 }
 
 - (instancetype)initWithMasterViewController:(UIViewController *)mvc
                         detailViewController:(UIViewController *)dvc
-                              isMasterHidden:(BOOL)isMasterHidden
+                              application:(UIApplication *)application
 {
     NSParameterAssert(mvc);
     NSParameterAssert(dvc);
@@ -84,7 +86,9 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
     self = [super init];
 
     if (self) {
-        [self setupWithViewControllers:@[mvc, dvc] isMasterHidden:isMasterHidden];
+        
+        self.application = application;
+        [self setupWithViewControllers:@[mvc, dvc] isMasterHidden:UIInterfaceOrientationIsPortrait(application.statusBarOrientation)];
     }
 
     return self;
@@ -128,7 +132,7 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
 {
     [super viewWillAppear:animated];
 
-    [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0.f];
+    [self willRotateToInterfaceOrientation:self.application.statusBarOrientation duration:0.f];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -365,7 +369,7 @@ static NSString * const kBDBSplitViewControllerKVOKeyPath = @"view.frame";
             self.detailViewShouldDim = NO;
             self.masterViewShouldDismissOnTap = NO;
 
-            if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            if (UIInterfaceOrientationIsLandscape(self.application.statusBarOrientation)) {
                 [self showMasterViewControllerAnimated:animated completion:nil];
             } else {
                 [self hideMasterViewControllerAnimated:animated completion:nil];

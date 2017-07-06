@@ -162,7 +162,7 @@ typedef NS_ENUM(NSInteger, BDBSplitViewControllerMasterDisplayStyle) {
  */
 + (instancetype)splitViewWithMasterViewController:(UIViewController *)mvc
                              detailViewController:(UIViewController *)dvc
-                                         isMasterHidden:(BOOL)isMasterHidden;
+                                      application:(UIApplication*)application;
 
 /**
  *  Initialize a new split view controller instance with the given master and detail view 
@@ -177,7 +177,7 @@ typedef NS_ENUM(NSInteger, BDBSplitViewControllerMasterDisplayStyle) {
  */
 - (instancetype)initWithMasterViewController:(UIViewController *)mvc
                         detailViewController:(UIViewController *)dvc
-                              isMasterHidden:(BOOL)isMasterHidden;
+                              application:(UIApplication*)application;
 
 
 #pragma mark Show / Hide Master View
